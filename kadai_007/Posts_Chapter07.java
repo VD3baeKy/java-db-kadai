@@ -11,28 +11,31 @@ import java.util.Date;
 import java.util.List;
 
 public class _Posts_Chapter07 {
-
 	public static void main(String[] args) {
 		// TODO 自動生成されたメソッド・スタブ
-		
+
 		Connection con = null;
-        //Statement statement = null;
+       		//Statement statement = null;
 		PreparedStatement statement = null;
         
-        final List<String> val1 = Collections.unmodifiableList(Arrays.asList("1003", "1002", "1003", "1001", "1002"));
-        final List<String> val2 = Collections.unmodifiableList(Arrays.asList("2023-02-08", "2023-02-08", "2023-02-09", "2023-02-09", "2023-02-10"));
-        final List<String> val3 = Collections.unmodifiableList(Arrays.asList("昨日の夜は徹夜でした・・	", "お疲れ様です！", "今日も頑張ります！", "無理は禁物ですよ！", "明日から連休ですね！"));
-        final List<String> val4 = Collections.unmodifiableList(Arrays.asList("13", "12", "18", "17", "20"));
+        	//final List<String> val1 = Collections.unmodifiableList(Arrays.asList("1003", "1002", "1003", "1001", "1002"));
+		//user_id(val1) は整数型が適切
+		final List<Integer> val1 = Arrays.asList(1003, 1002, 1003, 1001, 1002);
+        	final List<String> val2 = Collections.unmodifiableList(Arrays.asList("2023-02-08", "2023-02-08", "2023-02-09", "2023-02-09", "2023-02-10"));	
+		final List<String> val3 = Collections.unmodifiableList(Arrays.asList("昨日の夜は徹夜でした・・	", "お疲れ様です！", "今日も頑張ります！", "無理は禁物ですよ！", "明日から連休ですね！"));
+        	//final List<String> val4 = Collections.unmodifiableList(Arrays.asList("13", "12", "18", "17", "20"));
+		//likes(val4) は整数型が適切
+		final List<Integer> val4 = Arrays.asList(13, 12, 18, 17, 20);
+		
+        	try {
+            	// データベースに接続
+            	con = DriverManager.getConnection(
+                	"jdbc:mysql://localhost:3306/challenge_java",
+                	"root",
+                	""
+            	);
 
-        try {
-            // データベースに接続
-            con = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/challenge_java",
-                "root",
-                ""
-            );
-
-            System.out.println("データベース接続成功："+con);
+            	System.out.println("データベース接続成功："+con);
 		
 	        String sql = "INSERT INTO posts (user_id, posted_at, post_content, likes) VALUES (?, ?, ?, ?);";
 	        statement = con.prepareStatement(sql);
@@ -63,22 +66,20 @@ public class _Posts_Chapter07 {
 	        	i++;
 	        }
 	        
-            // データベース接続を解除
-            con.close();
+            	// データベース接続を解除
+            	con.close();
 
-        } catch(SQLException e) {
-	        System.out.println("エラー発生：" + e.getMessage());
-	    } finally {
-	        // 使用したオブジェクトを解放
-	        if( statement != null ) {
-	            try { statement.close(); } catch(SQLException ignore) {}
-	        }
-	        if( con != null ) {
-	            try { con.close(); } catch(SQLException ignore) {}
-	        }
-	    }
-
-
+        	} catch(SQLException e) {
+	        	System.out.println("エラー発生：" + e.getMessage());
+	    	} finally {
+	        	// 使用したオブジェクトを解放
+	        	if( statement != null ) {
+	            		try { statement.close(); } catch(SQLException ignore) {}
+	        	}
+	        	if( con != null ) {
+	            		try { con.close(); } catch(SQLException ignore) {}
+	        	}
+	    	}
 	}
 
 }
